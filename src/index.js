@@ -4,9 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import {
+  BrowserRouter as Router,
+  useHistory,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
+import Details from './components/Details';
+
 ReactDOM.render(
   <React.StrictMode>
+    <Router>
     <App />
+    <Route path="/details" component={Details} />
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

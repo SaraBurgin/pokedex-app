@@ -4,6 +4,7 @@ import './App.css';
 import { Component } from 'react';
 import Header from './components/Header';
 import PokeCard from './components/PokeCard';
+import Details from './components/Details';
 
 
 class App extends Component {
@@ -18,11 +19,11 @@ class App extends Component {
 
   // componentDidMount method runs after the render method, then updates the render method so we can produce/output the results. 
   // Code refactoring to call new function getMorePokemon.
-
   componentDidMount() {
     this.getMorePokemon();
   }
 
+  // Using the global fetch function to make an AJAX request. It takes in our endpoint URL as an input and returns a Promise that resolves to a Response object. We turn that object to json and make it available as data. 
   getMorePokemon() {
     let url = "https://pokeapi.co/api/v2/pokemon?offset=" + this.state.offset + "&limit=" + this.state.loadNumber;
     fetch(url)
@@ -55,14 +56,17 @@ class App extends Component {
       // console.log(pokemon);
       return (<PokeCard pokemon={pokemon} />);
     });
+    const furtherDetails = pokemonDetails.map((pokemon, index) => {
+      return (<Details pokemon={pokemon} />)
+    });
       return (
-          <>
-          <Header />
+        <>
+        <Header />
           <div className="container">
             <div className="card-columns">
               {renderedPokemonList}
             </div>
-      </div>
+          </div>
           </>
       );
     }
