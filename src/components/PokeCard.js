@@ -1,7 +1,6 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-// import Details from './Details';
+
 
 const PokeCard = ({pokemon}) => {
   // Pictures(sprites), names, order numbers
@@ -11,20 +10,7 @@ const PokeCard = ({pokemon}) => {
 
   // Types
   const types = pokemon.types;
-  // console.log(types[1]);
-
-  // if(types.length === 2) {
-  //   const prevTypesAdv = types.map(indTypes => {
-  //     return (`${indTypes['type']['name']} `)
-  //     });
-  //   const typesAdv = prevTypesAdv[0] + prevTypesAdv[0];
-  //     console.log(typesAdv);
-  // } else {
-
-  // }
-
   const typesAdv = types.map(indTypes => {
-    // console.log(indTypes['slot']);
       return (
           `${indTypes['type']['name']} ` 
           );
@@ -50,12 +36,16 @@ const PokeCard = ({pokemon}) => {
             </h6>
             <h6 className="card-subtitle mb-2 text-muted"># {order}</h6>  
           </div>
-            <button type="button" className="btn btn-danger" id="margin">
-              <a href="/details">More details</a>
-            </button>
+          {/* <Router>
+            <Route path="/details" component={Details}/> */}
+            {/* <Link to='/details'> */}
+                <button type="button" className="btn btn-danger" id="margin">
+                    More details
+                </button>
+            {/* </Link>
+          </Router> */}
           </div>
       </div>
-  
   )
 };
 

@@ -1,6 +1,5 @@
-
 .App-logo {
-  height: 30vmin;
+  height: 7vmin;
   pointer-events: none;
 }
 
@@ -12,7 +11,7 @@
 
 .App-header {
   background-color: #ef5350;
-  min-height: 15vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,59 +33,7 @@
     transform: rotate(360deg);
   }
 }
-
-/* margin */ 
-#margin {
-  margin-bottom: 5px;
+.navbar {
+  background-color: #ef5350 !important;
 }
 
-/* coloured types */
-
-.grass {
-  background-color: green;
-  color: white;
-  border-radius: 2px;
-  padding: 1px;
-}
-
-.poison {
-  background-color: red;
-  color: white;
-  border-radius: 2px;
-  padding: 1px;
-}
-
-.water {
-  background-color: turquoise;
-  color: white;
-  border-radius: 2px;
-  padding: 1px;
-}
-
-.bug {
-  background-color: brown;
-  color: white;
-  border-radius: 2px;
-  padding: 1px;
-}
-
-.flying {
-  background-color: yellow;
-  color: black;
-  border-radius: 2px;
-  padding: 1px;
-}
-
-.fire {
-  background-color: orange;
-  color: black;
-  border-radius: 2px;
-  padding: 1px;
-}
-
-.normal {
-  background-color: gray;
-  color: black;
-  border-radius: 2px;
-  padding: 1px;
-}
