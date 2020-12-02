@@ -39,3 +39,54 @@
 #margin {
   margin-bottom: 5px;
 }
+
+/* coloured types */
+
+.grass {
+  background-color: green;
+  color: white;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.poison {
+  background-color: red;
+  color: white;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.water {
+  background-color: turquoise;
+  color: white;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.bug {
+  background-color: brown;
+  color: white;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.flying {
+  background-color: yellow;
+  color: black;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.fire {
+  background-color: orange;
+  color: black;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.normal {
+  background-color: gray;
+  color: black;
+  border-radius: 2px;
+  padding: 1px;
+}
