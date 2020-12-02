@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Details from './Details';
 
 import {
   BrowserRouter as Router,
-  useHistory,
-  Switch,
   Route,
-  Link
 } from 'react-router-dom';
-import Details from './components/Details';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -21,18 +21,20 @@ const PokeCard = ({pokemon}) => {
  
     return (
       <div className="card text-center mx-auto" style={{"maxWidth" : "18rem"}} key={pokemon.id}>
-        <div className="card-header"><b>{name}</b></div>
-          <div className="card-body">          
+        <div className="card-header">
+          <img class="card-img-top" src={pictures['front_default']} alt="front-default" style={{"width" : "110px"}}/>
+          <div className="card-body">
+            <h5 class="card-title"><b>{name}</b></h5>      
             <h6 className="card-subtitle mb-2 text-muted">
             Types: { typesAdv }
             </h6>
-            <h6 className="card-subtitle mb-2 text-muted">Order number: {order}</h6>  
-            <img src={pictures['front_default']} alt="front-default"/>
-            <img src={pictures['back_default']} alt="back-default"/>                     
+            <h6 className="card-subtitle mb-2 text-muted"># {order}</h6>  
+            {/* <img src={pictures['back_default']} alt="back-default"/>                      */}
           </div>
             <button type="button" className="btn btn-danger" id="margin">
               <a href="/details">More details</a>
             </button>
+          </div>
       </div>
   
   )

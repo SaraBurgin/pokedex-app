@@ -4,17 +4,30 @@ import './App.css';
 import { Component } from 'react';
 import Header from './components/Header';
 import PokeCard from './components/PokeCard';
-import Details from './components/Details';
+// import Details from './Details.js';
 
 
 class App extends Component {
-
   constructor() {
     super();
     this.state = {
       pokemons : [],
       pokemonDetails : [],
-    }    
+      offset: 0,
+      loadNumber: 24
+    }
+    this.handleMoreClick = this.handleMoreClick.bind(this);    
+  }
+  getNextOffset() {
+    return this.state.offset+this.state.loadNumber;
+   }
+  
+   handleMoreClick() {
+    const newOffset = this.getNextOffset();
+    this.setState({offset: newOffset}, () => {
+      console.log("Offset: " + this.state.offset)
+      this.getMorePokemon();
+    });    
   }
 
   // componentDidMount method runs after the render method, then updates the render method so we can produce/output the results. 
@@ -54,11 +67,16 @@ class App extends Component {
     const {pokemonDetails} = this.state;
     const renderedPokemonList = pokemonDetails.map((pokemon, index) => {
       // console.log(pokemon);
-      return (<PokeCard pokemon={pokemon} />);
+      return (
+        <>
+        <PokeCard pokemon={pokemon} /> 
+        </>
+        );
     });
-    const furtherDetails = pokemonDetails.map((pokemon, index) => {
-      return (<Details pokemon={pokemon} />)
-    });
+    
+    // const furtherDetails = pokemonDetails.map((pokemon, index) => {
+    //   return (<Details pokemon={pokemon} />)
+    // });
       return (
         <>
         <Header />
@@ -67,8 +85,9 @@ class App extends Component {
               {renderedPokemonList}
             </div>
           </div>
-          </>
-      );
+          <button type="button" className="btn btn-secondary btn-block" onClick={this.handleMoreClick} key="more-button" id="more-button">Load More</button>
+        </>
+      ); 
     }
 }
 
