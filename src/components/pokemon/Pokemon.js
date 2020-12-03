@@ -122,25 +122,18 @@ let evol2 = pokemonResEvolution.data.chain['evolves_to'][0];
 let evol3 = pokemonResEvolution.data.chain['evolves_to'][0];
 
 if(evol2 === undefined) {
-  console.log("It doesn't have further evolutions");
-  evol2 = null;
-  evol3 = null;
+  evol2 = ' ';
+  evol3 = ' ';
+  console.log("No further evolutions");
 } else if (evol3['evolves_to'][0] === undefined){
-  evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name;
-  evol3 = null;
+    evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name;
+    evol3 = ' ';
+    console.log(`Just 1 available evolution ${evol2}`);
 } else {
-  evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name
-  evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0].species.name
-  console.log(`It is working!! ${evol2} ${evol3}`);
+    evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name
+    evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0].species.name
+    console.log(`2 available evolutions ${evol2} ${evol3}`);
 }
-
-  // if(evol3 === undefined) {
-  //   console.log("It doesn't have further evolutions");
-  //   evol3 = null;
-  // } else {
-  //   evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0].species.name
-  //   console.log(`It is working!! ${evol3}`);
-  // }
 
 
 // Setting all fetched data from API to our state
@@ -201,7 +194,7 @@ if(evol2 === undefined) {
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-md-3">
-                <img src={this.state.imageUrl} className="card-img-top rounded mx-auto ml-2" style={{width: '120px'}} alt="poke-img"/>
+                <img src={this.state.imageUrl} className="card-img-top rounded mx-auto ml-2 d-block" style={{width: '120px'}} alt="poke-img"/>
               </div>
               <div className="col-md-9">
                 <h4 className="mx-auto">
@@ -211,7 +204,7 @@ if(evol2 === undefined) {
                   .map(s => s.charAt(0).toUpperCase() + s.substring(1))
                   .join(' ')}
                 </h4>
-                <div className="row alignt-items-center">
+                <div className="row align-items-center">
                   <div className="col-12 col-md-3">
                     HP
                   </div>
@@ -221,8 +214,7 @@ if(evol2 === undefined) {
                       className="progress-bar"
                       style={{
                         width: `${this.state.stats.hp}%`
-                      }}
-                     >
+                      }}>
                         <small>{this.state.stats.hp}</small>
                       </div>
                     </div>
@@ -245,7 +237,7 @@ if(evol2 === undefined) {
                     </div>
                   </div>
                 </div>
-                <div className="row alignt-items-center">
+                <div className="row align-items-center">
                   <div className="col-12 col-md-3">
                     Defense
                   </div>
@@ -262,7 +254,7 @@ if(evol2 === undefined) {
                     </div>
                   </div>
                 </div>
-                <div className="row alignt-items-center">
+                <div className="row align-items-center">
                   <div className="col-12 col-md-3">
                     Speed
                   </div>
@@ -279,7 +271,7 @@ if(evol2 === undefined) {
                     </div>
                   </div>
                 </div>
-                <div className="row alignt-items-center">
+                <div className="row align-items-center">
                   <div className="col-12 col-md-3">
                     Special attack
                   </div>
@@ -289,14 +281,13 @@ if(evol2 === undefined) {
                       className="progress-bar"
                       style={{
                         width: `${this.state.stats.specialAttack}%`
-                      }}
-                    >
+                      }}>
                         <small>{this.state.stats.specialAttack}</small>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="row alignt-items-center">
+                <div className="row align-items-center">
                   <div className="col-12 col-md-3">
                     Special Defense
                   </div>
@@ -306,43 +297,40 @@ if(evol2 === undefined) {
                       className="progress-bar"
                       style={{
                         width: `${this.state.stats.specialDefense}%`
-                      }}
-                      >
+                      }}>
                         <small>{this.state.stats.specialDefense}</small>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="card-body">
-            <h5 className="card-title text-center">Profile</h5>
-            <div className="row">
-              <div className="col-md-6">
-                <h6 className="float-right">
-                      Abilities:
-                </h6>
+              <div className="col-md-3">
               </div>
-              <div className="col-md-6">
-                    <h6 className="float-left"> {this.state.abilities}</h6>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <h6 className="float-right">
-                      Moves:
-                </h6>
-              </div>
-              <div className="col-md-6">
-                    <h6 className="float-left">{this.state.moves.map(move => {
+              <div className="col-md-9" style={{marginTop: '20px'}}>
+                <h4 className="mx-auto">
+                  Profile
+                </h4>
+                <div className="row align-items-center">
+                  <div className="col-12 col-md-3">
+                    Abilities:
+                  </div>
+                  <div className="col-23 col-md-9">
+                    <h6> {this.state.abilities}</h6>
+                  </div>
+                  <div className="col-12 col-md-3">
+                    Moves:
+                  </div>
+                  <div className="col-23 col-md-9">
+                  <h6 className="float-left">{this.state.moves.map(move => {
                       return move.toLowerCase().split('-')
                       .map(s => s.charAt(0).toUpperCase() + s.substring(1))
                       .join(' ');
                     }).join(', ')
                 }</h6>
+                  </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -357,19 +345,31 @@ if(evol2 === undefined) {
             </div>
             <div className="card-body">
               <div className="row align-items-center">
-                <div className="col-md-4">
+                <div className="col-sm text-center">
                   <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol1}.png`} alt=""/>
                   <h5>{this.state.evol1
+                  .toLowerCase()
+                  .split('-')
+                  .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                  .join(' ')
                     }</h5>
                 </div>
-                <div className="col-md-3">
+                <div className="col-sm text-center">
                   <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol2}.png`} alt=""/>
                   <h5>{this.state.evol2
+                  .toLowerCase()
+                  .split(' ')
+                  .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                  .join(' ')
                     }</h5>
                 </div>
-                <div className="col-md-3">
+                <div className="col-sm text-center">
                 <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol3}.png`} alt=""/>
                   <h5>{this.state.evol3
+                                    .toLowerCase()
+                                    .split(' ')
+                                    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                                    .join(' ')
                     }</h5>
                 </div>
               </div>

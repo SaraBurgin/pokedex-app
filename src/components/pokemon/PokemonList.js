@@ -6,7 +6,7 @@ import PokemonCard from './PokemonCard';
 
 const Button = Styled.button`
   font-weight: bold;
-  font-size: 30px;
+  font-size: 25px;
   border-radius: 10px;
   background-color: #ef5350 !important;
   border: 1px solid white;
@@ -22,7 +22,7 @@ export default class PokemonList extends Component {
       url: "https://pokeapi.co/api/v2/pokemon?offset=offset&limit=loadNumber",
       pokemon: null,
       offset: 0,
-      loadNumber: 50,
+      loadNumber: 52,
     }
     this.handleClick = this.handleClick.bind(this);   
   }
