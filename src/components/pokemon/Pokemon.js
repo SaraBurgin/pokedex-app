@@ -26,7 +26,6 @@ export default class Pokemon extends Component {
   state = {
     name: '',
     pokemonIndex: '',
-    // pokemonEvolutionIndex: '',
     imageUrl: '',
     types : [],
     stats: {
@@ -39,18 +38,17 @@ export default class Pokemon extends Component {
     },
     abilities: " ",
     moves: [],
-    evolutions: {},
+    evol1: '',
+    evol2: '',
+    evol3: '',
   }
 
   async componentDidMount() {
     // this will go to the url and grab the pokemonIndex we included in our params at App.js and put it in our pokemonIndex here
     const {pokemonIndex} = this.props.match.params;
 
-    // urls for the pokemon information
+    // #Information url's
     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
-    const pokemonUrlEvs = `https://pokeapi.co/api/v2/evolution-chain/${pokemonIndex}`;
-
-    // Pokemon species
     const pokemonUrlSpecies = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}`;
 
     // Get pokemon information: name, image, stats, moves, types, abilities, evs
@@ -73,8 +71,8 @@ export default class Pokemon extends Component {
         }).join(', ');
 
     let { hp, attack, defense, speed, specialAttack, specialDefense} = '';
-
     pokemonRes.data.stats.map(stat => {
+      // eslint-disable-next-line default-case
       switch(stat.stat.name) {
         case 'hp':
           hp = stat['base_stat'];
@@ -98,20 +96,42 @@ export default class Pokemon extends Component {
     })
 
 // Get pokemon information: evolutions
-const pokemonResEv = await axios.get(pokemonUrlEvs);
-
 const pokemonResSpecies = await axios.get(pokemonUrlSpecies);
-console.log(pokemonResSpecies.data); 
-// const firtstEvolution = pokemonResEv.data.chain['evolves_to'][0].species.name;
-// console.log(firtstEvolution);
-// console.log(pokemonResEv.data.chain['species'].name);
 
-// console.log(pokemonResEv.data.chain['species']);
+// #Evolution url
+const evolutionChainUrl = pokemonResSpecies.data['evolution_chain'].url;
+const evolutionId = evolutionChainUrl
+.split('/')  
+.map((id) => {
+  return id;
+  }
+  );
+
+const pokeEvolutionIndex = parseInt(evolutionId[(evolutionId.length - 2)]);
+const pokemonUrlEvolution = `https://pokeapi.co/api/v2/evolution-chain/${pokeEvolutionIndex}`;
+const pokemonResEvolution = await axios.get(pokemonUrlEvolution);
+
+
+const evol1 = pokemonResEvolution.data.chain.species.name;
+const evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name;
+
+// console.log(pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0]);
+
+let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
+
+  if(evol3 === undefined) {
+    console.log("It doesn't have further evolutions");
+    evol3 = null;
+  } else {
+    evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0].species.name;
+    console.log(`It is working!! ${evol3}`);
+  }
+
 
 // Setting all fetched data from API to our state
   this.setState({
     name, 
-    pokemonIndex, 
+    pokemonIndex,
     imageUrl, 
     types,  
     stats: {
@@ -124,6 +144,9 @@ console.log(pokemonResSpecies.data);
     },
     abilities, 
     moves,
+    evol1,
+    evol2,
+    evol3,
   })
   }
   render() {
@@ -148,7 +171,7 @@ console.log(pokemonResSpecies.data);
                     >
                     {type
                     .toLowerCase()
-                    .split('-')
+                    .split(' ')
                     .map(s => s.charAt(0).toUpperCase() + s.substring(1))
                     .join(' ')}
                   </span>
@@ -157,6 +180,7 @@ console.log(pokemonResSpecies.data);
               </div> 
             </div>
           </div>
+
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-md-3">
@@ -288,6 +312,7 @@ console.log(pokemonResSpecies.data);
 
             </div>
           </div>
+
           <div className="card-body">
             <h5 className="card-title text-center">Profile</h5>
             <div className="row">
@@ -311,6 +336,33 @@ console.log(pokemonResSpecies.data);
                       return move;
                     }).join(', ')
                 }</h6>
+              </div>
+
+              <div className="card-body">
+                <h5 className="card-title text-center">Evolutions</h5>
+                <div className="row">
+                  <div className="col-md-6">
+                    <h5 className="float-right">{this.state.evol1
+                    .toLowerCase()
+                    .split(' ')
+                    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                    }</h5>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <h5 className="float-right">{this.state.evol2
+                    .toLowerCase()
+                    .split(' ')
+                    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                    }</h5>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <h5 className="float-right">{this.state.evol3}</h5>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

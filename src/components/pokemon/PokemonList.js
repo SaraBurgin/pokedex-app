@@ -6,8 +6,13 @@ import PokemonCard from './PokemonCard';
 
 const Button = Styled.button`
   font-weight: bold;
-  font-size: 20px;
-  border-radius: 3px;
+  font-size: 30px;
+  border-radius: 10px;
+  background-color: #ef5350 !important;
+  border: 1px solid white;
+  &:hover {
+    border: 2px solid grey;
+  }
 `
 
 export default class PokemonList extends Component {
