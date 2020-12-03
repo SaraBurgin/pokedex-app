@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import spinner from '../pokemon/spin.svg';
 
 const TYPE_COLORS = {
   bug: 'B1C12E',
@@ -42,6 +43,8 @@ export default class Pokemon extends Component {
     evol2: '',
     evol3: '',
     evolImgIndex: '',
+    imageLoading: true,
+    tooManyRequests: false,
   }
 
   async componentDidMount() {
