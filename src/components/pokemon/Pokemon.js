@@ -29,7 +29,7 @@ export default class Pokemon extends Component {
     imageUrl: '',
     types : [],
     stats: {
-      hp: " ",
+      hp: '',
       attack: " ",
       deffense: " ",
       speed: " ",
@@ -41,6 +41,7 @@ export default class Pokemon extends Component {
     evol1: '',
     evol2: '',
     evol3: '',
+    evolImgIndex: '',
   }
 
   async componentDidMount() {
@@ -55,7 +56,8 @@ export default class Pokemon extends Component {
     const pokemonRes = await axios.get(pokemonUrl);
 
     const name = pokemonRes.data.name;
-    const imageUrl = pokemonRes.data.sprites.front_default;
+    const imageUrl = `https://img.pokemondb.net/sprites/home/normal/${name}.png`
+    // const imageUrl = pokemonRes.data.sprites.front_default;
     const moves = pokemonRes.data.moves.map(move => 
       move.move.name
       );
@@ -111,21 +113,34 @@ const pokeEvolutionIndex = parseInt(evolutionId[(evolutionId.length - 2)]);
 const pokemonUrlEvolution = `https://pokeapi.co/api/v2/evolution-chain/${pokeEvolutionIndex}`;
 const pokemonResEvolution = await axios.get(pokemonUrlEvolution);
 
+const evolImgIndex = pokemonResSpecies.data.id;
+console.log(pokemonResEvolution.data.chain);
 
 const evol1 = pokemonResEvolution.data.chain.species.name;
-const evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name;
 
-// console.log(pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0]);
+let evol2 = pokemonResEvolution.data.chain['evolves_to'][0];
+let evol3 = pokemonResEvolution.data.chain['evolves_to'][0];
 
-let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
+if(evol2 === undefined) {
+  console.log("It doesn't have further evolutions");
+  evol2 = null;
+  evol3 = null;
+} else if (evol3['evolves_to'][0] === undefined){
+  evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name;
+  evol3 = null;
+} else {
+  evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name
+  evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0].species.name
+  console.log(`It is working!! ${evol2} ${evol3}`);
+}
 
-  if(evol3 === undefined) {
-    console.log("It doesn't have further evolutions");
-    evol3 = null;
-  } else {
-    evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0].species.name;
-    console.log(`It is working!! ${evol3}`);
-  }
+  // if(evol3 === undefined) {
+  //   console.log("It doesn't have further evolutions");
+  //   evol3 = null;
+  // } else {
+  //   evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0].species.name
+  //   console.log(`It is working!! ${evol3}`);
+  // }
 
 
 // Setting all fetched data from API to our state
@@ -147,10 +162,12 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
     evol1,
     evol2,
     evol3,
+    evolImgIndex,
   })
   }
   render() {
     return (
+      <>
       <div className="col" >
         <div className="card">
           <div className="card-header">
@@ -167,6 +184,7 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
                     style={{
                     backgroundColor: `#${TYPE_COLORS[type]}`,
                     color: 'white',
+                    fontSize: '16px',
                     }}
                     >
                     {type
@@ -180,11 +198,10 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
               </div> 
             </div>
           </div>
-
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-md-3">
-                <img src={this.state.imageUrl} className="card-img-top rounded mx-auto ml-2" alt="poke-img"/>
+                <img src={this.state.imageUrl} className="card-img-top rounded mx-auto ml-2" style={{width: '120px'}} alt="poke-img"/>
               </div>
               <div className="col-md-9">
                 <h4 className="mx-auto">
@@ -202,12 +219,10 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
                     <div className="progress">
                       <div
                       className="progress-bar"
-                      role="progressBar" style={{
+                      style={{
                         width: `${this.state.stats.hp}%`
                       }}
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
+                     >
                         <small>{this.state.stats.hp}</small>
                       </div>
                     </div>
@@ -221,12 +236,10 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
                     <div className="progress">
                       <div
                       className="progress-bar"
-                      role="progressBar" style={{
+                       style={{
                         width: `${this.state.stats.attack}%`
                       }}
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
+                      >
                         <small>{this.state.stats.attack}</small>
                       </div>
                     </div>
@@ -240,12 +253,10 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
                     <div className="progress">
                       <div
                       className="progress-bar"
-                      role="progressBar" style={{
+                      style={{
                         width: `${this.state.stats.defense}%`
                       }}
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
+                      >
                         <small>{this.state.stats.defense}</small>
                       </div>
                     </div>
@@ -259,12 +270,10 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
                     <div className="progress">
                       <div
                       className="progress-bar"
-                      role="progressBar" style={{
+                      style={{
                         width: `${this.state.stats.speed}%`
                       }}
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
+                      >
                         <small>{this.state.stats.speed}</small>
                       </div>
                     </div>
@@ -278,12 +287,10 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
                     <div className="progress">
                       <div
                       className="progress-bar"
-                      role="progressBar" style={{
+                      style={{
                         width: `${this.state.stats.specialAttack}%`
                       }}
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
+                    >
                         <small>{this.state.stats.specialAttack}</small>
                       </div>
                     </div>
@@ -297,22 +304,18 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
                     <div className="progress">
                       <div
                       className="progress-bar"
-                      role="progressBar" style={{
+                      style={{
                         width: `${this.state.stats.specialDefense}%`
                       }}
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
+                      >
                         <small>{this.state.stats.specialDefense}</small>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
-
           <div className="card-body">
             <h5 className="card-title text-center">Profile</h5>
             <div className="row">
@@ -333,41 +336,47 @@ let evol3 = pokemonResEvolution.data.chain['evolves_to'][0]['evolves_to'][0];
               </div>
               <div className="col-md-6">
                     <h6 className="float-left">{this.state.moves.map(move => {
-                      return move;
+                      return move.toLowerCase().split('-')
+                      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                      .join(' ');
                     }).join(', ')
                 }</h6>
-              </div>
-
-              <div className="card-body">
-                <h5 className="card-title text-center">Evolutions</h5>
-                <div className="row">
-                  <div className="col-md-6">
-                    <h5 className="float-right">{this.state.evol1
-                    .toLowerCase()
-                    .split(' ')
-                    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-                    }</h5>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <h5 className="float-right">{this.state.evol2
-                    .toLowerCase()
-                    .split(' ')
-                    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-                    }</h5>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <h5 className="float-right">{this.state.evol3}</h5>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
-      </ div>
+      </div>
+      <div className="col">
+          <div className="card">
+            <div className="card-header">
+              <div className="row">
+                <div className="col-12">
+                <h5>EVOLUTIONS</h5>
+                </div>
+              </div>
+            </div>
+            <div className="card-body">
+              <div className="row align-items-center">
+                <div className="col-md-4">
+                  <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol1}.png`} alt=""/>
+                  <h5>{this.state.evol1
+                    }</h5>
+                </div>
+                <div className="col-md-3">
+                  <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol2}.png`} alt=""/>
+                  <h5>{this.state.evol2
+                    }</h5>
+                </div>
+                <div className="col-md-3">
+                <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol3}.png`} alt=""/>
+                  <h5>{this.state.evol3
+                    }</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      </>
       )
   }
 }

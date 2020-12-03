@@ -18,7 +18,6 @@ class App extends Component {
             <NavBar />
             <div className="container">
               <Switch>
-                {/* No need to declare Dashboard component as with route we already redirect the component to / */}
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/pokemon/:pokemonIndex" component={Pokemon}/>
               </Switch>
