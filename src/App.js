@@ -9,10 +9,6 @@ import NavBar from './components/layout/NavBar.js'
 import Dashboard from './components/layout/Dashboard'
 import Pokemon from './components/pokemon/Pokemon'
 
-// import PokeCard from './components/PokeCard';
-
-
-
 class App extends Component {
   // constructor() {
   //   super();
@@ -69,24 +65,6 @@ class App extends Component {
   // }
 
   render() {
-    // const {pokemonDetails} = this.state;
-    // const renderedPokemonList = pokemonDetails.map((pokemon, index) => {
-    //   // console.log(pokemon);
-    //   return (
-    //     <>
-    //     <PokeCard pokemon={pokemon} /> 
-    //     </>
-    //     );
-    // });
-
-    // const renderedDetailsList = pokemonDetails.map((pokemonDets, index) => {
-    //   return (
-    //     <>
-    //     <Details pokemon={pokemonDets} />
-    //     </>
-    //   );
-    // });
-    
       return (
         <Router>
           <div className="App">
@@ -97,11 +75,6 @@ class App extends Component {
                 <Route exact path="/pokemon/:pokemonIndex" component={Pokemon}/>
                 <Dashboard />
               </Switch>
-                {/* <div className="card-columns">
-                  {renderedPokemonList}
-                </div>
-              </div>
-              <button type="button" className="btn btn-secondary btn-block" onClick={this.handleMoreClick} key="more-button" id="more-button">Load More</button> */}
               </div>
           </div>
         </ Router>
