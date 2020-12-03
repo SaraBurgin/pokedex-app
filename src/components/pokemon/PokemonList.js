@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-
-import PokemonCard from './PokemonCard';
 import axios from 'axios';
 
+import Styled from 'styled-components';
+import PokemonCard from './PokemonCard';
+
+const Button = Styled.button`
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 3px;
+`
 
 export default class PokemonList extends Component {
   constructor() {
@@ -28,11 +34,9 @@ export default class PokemonList extends Component {
     })
   }
 
-// setState is updating state, so if there isn't any info in state it will create it and if it  has been used it will overwrite it. setState will re-run my render function. If only one thing changes then it will only re-render that component.
   componentDidMount() {
     this.getMorePokemon();
   }
-  
 
   async getMorePokemon() {
     this.setState({url: "https://pokeapi.co/api/v2/pokemon?offset=" + this.state.offset + "&limit=" + this.state.loadNumber});
@@ -53,7 +57,7 @@ export default class PokemonList extends Component {
         ) : (<h1>Loading pokemon</h1>
         )}
       </div>
-      <button type="button" className="btn btn-info btn-block" onClick={this.handleClick}>Load More</button>
+      <Button type="button" className="btn btn-info btn-block" onClick={this.handleClick}>Load More</Button>
       </>
       );
   }

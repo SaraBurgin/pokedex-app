@@ -26,6 +26,7 @@ export default class Pokemon extends Component {
   state = {
     name: '',
     pokemonIndex: '',
+    // pokemonEvolutionIndex: '',
     imageUrl: '',
     types : [],
     stats: {
@@ -36,9 +37,9 @@ export default class Pokemon extends Component {
       specialAttack: " ",
       specialDefense: " ",
     },
-    eggGroup: " ",
     abilities: " ",
     moves: [],
+    evolutions: {},
   }
 
   async componentDidMount() {
@@ -47,12 +48,29 @@ export default class Pokemon extends Component {
 
     // urls for the pokemon information
     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
-    const pokemonSpeciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`;
+    const pokemonUrlEvs = `https://pokeapi.co/api/v2/evolution-chain/${pokemonIndex}`;
 
-    // Get pokemon information
+    // Pokemon species
+    const pokemonUrlSpecies = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}`;
+
+    // Get pokemon information: name, image, stats, moves, types, abilities, evs
     const pokemonRes = await axios.get(pokemonUrl);
+
     const name = pokemonRes.data.name;
     const imageUrl = pokemonRes.data.sprites.front_default;
+    const moves = pokemonRes.data.moves.map(move => 
+      move.move.name
+      );
+    const types = pokemonRes.data.types.map(type => 
+      type.type.name
+      );
+    const abilities = pokemonRes.data.abilities.map(ability => {
+        return ability.ability.name
+        .toLowerCase()
+          .split('-')
+          .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(' ');
+        }).join(', ');
 
     let { hp, attack, defense, speed, specialAttack, specialDefense} = '';
 
@@ -79,69 +97,23 @@ export default class Pokemon extends Component {
       }
     })
 
-    const moves = pokemonRes.data.moves.map(move => 
-      move.move.name
-      );
+// Get pokemon information: evolutions
+const pokemonResEv = await axios.get(pokemonUrlEvs);
 
-      console.log(moves);
+const pokemonResSpecies = await axios.get(pokemonUrlSpecies);
+console.log(pokemonResSpecies.data); 
+// const firtstEvolution = pokemonResEv.data.chain['evolves_to'][0].species.name;
+// console.log(firtstEvolution);
+// console.log(pokemonResEv.data.chain['species'].name);
 
-    const types = pokemonRes.data.types.map(type => 
-      type.type.name
-      );
+// console.log(pokemonResEv.data.chain['species']);
 
-      const abilities = pokemonRes.data.abilities.map(ability => {
-        return ability.ability.name
-        .toLowerCase()
-          .split('-')
-          .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-          .join(' ');
-        }).join(', ');
-
-        const evs = pokemonRes.data.stats.filter(stat => {
-          if(stat.effort > 0) {
-            return true;
-          } 
-          return false;
-        })
-        .map(stat => {
-          return `${stat.effort} ${stat.stat.name}`
-          .toLowerCase()
-          .split('-')
-          .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-          .join(' ');
-        }).join(' , ');
-
-// Get pokemon descriptoon
-
-await axios.get(pokemonSpeciesUrl).then(res=> {
-    let description = '';
-    res.data.flavor_text_entries.some(flavor => {
-      if(flavor.language.name === "en") {
-        description = flavor.flavor_text;
-        return;
-      }
-      });
-    
-      const eggGroups = res.data['egg_groups'].map(group => {
-        return group.name
-        .toLowerCase()
-        .split('-')
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ');
-      }).join(', ');
-
-      this.setState({
-        description, 
-        eggGroups,
-      })
-  });
-
+// Setting all fetched data from API to our state
   this.setState({
-    imageUrl, 
-    pokemonIndex, 
     name, 
-    types,
-    moves,  
+    pokemonIndex, 
+    imageUrl, 
+    types,  
     stats: {
       hp, 
       attack, 
@@ -151,10 +123,9 @@ await axios.get(pokemonSpeciesUrl).then(res=> {
       specialDefense,
     },
     abilities, 
-    evs
+    moves,
   })
   }
-
   render() {
     return (
       <div className="col" >
@@ -327,16 +298,6 @@ await axios.get(pokemonSpeciesUrl).then(res=> {
               </div>
               <div className="col-md-6">
                     <h6 className="float-left"> {this.state.abilities}</h6>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <h6 className="float-right">
-                      EVs:
-                </h6>
-              </div>
-              <div className="col-md-6">
-                    <h6 className="float-left"> {this.state.evs}</h6>
               </div>
             </div>
             <div className="row">

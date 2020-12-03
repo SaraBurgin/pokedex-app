@@ -5,8 +5,8 @@ import Styled from 'styled-components';
 import spinner from '../pokemon/spin.svg';
 
 const Sprite = Styled.img`
-  width: 5em;
-  height: 5em;
+  width: 10em;
+  /* height: 5em; */
   display: none;
 `
 const Card = Styled.div`
@@ -52,7 +52,6 @@ export default class PokemonCard extends Component {
 
   render() {
     return (
-      // Bootstrap 12 columns, we should have 4 cards across a medium sized page. If they go to mobile, it would occupy half of the columns so it should only have 2 parts. 
       <div className="col-md-3 col-sm-6 mb-5">
         <StyledLink to={`pokemon/${this.state.pokemonIndex}`}>
         <Card className="card">
