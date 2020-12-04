@@ -75,7 +75,8 @@ export default class Pokemon extends Component {
         }).join(', ');
 
     let { hp, attack, defense, speed, specialAttack, specialDefense} = '';
-    pokemonRes.data.stats.map(stat => {
+
+    pokemonRes.data.stats.forEach(stat => {
       // eslint-disable-next-line default-case
       switch(stat.stat.name) {
         case 'hp':
