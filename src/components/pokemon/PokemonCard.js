@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 
 import Styled from 'styled-components';
-import spinner from '../pokemon/spin.svg';
+import spinner from './spin.svg';
 
 const Sprite = Styled.img`
   width: 10em;
   display: none;
 `
 const Card = Styled.div`
-      
       box-shadow: 0 1px 3px rgbaa(0,0,0,0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       &:hover {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import spinner from '../pokemon/spin.svg';
 
 const TYPE_COLORS = {
   bug: 'B1C12E',
