@@ -1,15 +1,44 @@
-## Available Scripts
+## Project description:
+
+### Building the interface:
+
+- React
+
+## Requesting the data:
+
+- I have used axios library to make the HTTP request to the Pokemon API with axios get and used state to set the data.
+
+## Styling
+
+- As for styling I have included both Bootstrap and Styled-components to my project. Using them, in some cases, together to achieve what I wanted.
+
+## Testing
+
+- As for testing I have used jest which comes as default with create-react-app and enzyme.
+
+### Available unit tests:
+
+- App.test.js
+  Render without crashing & render navbar.
+
+- Pokemon.test.js
+  Renders pokemon without crashing
+
+- PokemonCard.test.js
+  Renders pokemonCard without crashing using render from react library and MemoryRouter
+  Again, renders PokemonCard correctly but this time using enzyme
+
+- PokemonList.test.js
+  Renders pokemonList without crashing using react library
+  Renders load more button correctly
+  Renders the text inside the button correctly using Jes
+  Matches snapshot is correctly working using jest and renderer from react-test-renderer
 
 In the project directory, you can run:
 
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
 ## Task description:
 

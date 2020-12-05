@@ -43,7 +43,7 @@ export default class PokemonCard extends Component {
 
   componentDidMount() {
     const { name, url } = this.props;
-    const pokemonIndex = url.split('/')[url.split('/').length - 2];
+    const pokemonIndex = url ? url.split('/')[url.split('/').length - 2] : 0;
     const imageUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`;
 
     this.setState({ name, imageUrl, pokemonIndex });
@@ -71,7 +71,7 @@ export default class PokemonCard extends Component {
           {this.state.tooManyRequests ? (<h6 className="mx-ato"><span className="badge badge-danger mt-2">Too Many Requests</span></h6>) : null}
           <div className="card-body mx-auto">
             <h6 className="card-title ">
-            {this.state.name
+            {this.state.name && this.state.name
               .toLowerCase()
               .split(' ')
               .map(

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PokemonList from '../PokemonList';
 import Button from '../PokemonList';
 
+
 import renderer from 'react-test-renderer';
 
 afterEach(cleanup);
@@ -29,7 +30,5 @@ it('matches snapshot', () => {
   const tree = renderer.create(<PokemonList />).toJSON();
   expect(tree).toMatchSnapshot();
 }); 
-// When it creates a tree and whenever I expect to match snapshot it goes and looks at the folder structure and looks for a folder called snapshot, in there there should be a file called PokemonList.snapshot that is created the first time that you run this fx. When you make changes to the component you should update the snapshot so this test does not fail. 
+// When it creates a tree and whenever I expect to match snapshot it goes and looks at the folder structure and looks for a folder called snapshot, in there there should be a file called PokemonList.snapshot that is created the first time that you run this fx. When you make changes to the component you should update the snapshot so this test does not fail.
 
-// ReactDOM is part of the React library
-// expect is from Jest

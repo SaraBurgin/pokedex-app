@@ -10,7 +10,7 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 })
 
-it('renders navbar without crashing', () => {
+it('renders navbar', () => {
   const wrapper = shallow(<App />);
   const navbar = (<NavBar />);
   expect(wrapper.contains(navbar)).toEqual(true);

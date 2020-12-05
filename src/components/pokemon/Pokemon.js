@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import spinner from './spin.svg'
 
 const TYPE_COLORS = {
   bug: 'B1C12E',
@@ -59,7 +60,7 @@ export default class Pokemon extends Component {
 
     const name = pokemonRes.data.name;
     const imageUrl = `https://img.pokemondb.net/sprites/home/normal/${name}.png`
-    // const imageUrl = pokemonRes.data.sprites.front_default;
+
     const moves = pokemonRes.data.moves.map(move => 
       move.move.name
       );
@@ -197,7 +198,7 @@ if(evol2 === undefined) {
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-md-3">
-                <img src={this.state.imageUrl} className="card-img-top rounded mx-auto ml-2 d-block" style={{width: '120px'}} alt="poke-img"/>
+                {this.state.imageUrl ? (<img src={this.state.imageUrl} className="card-img-top rounded mx-auto ml-2 d-block" style={{width: '120px'}} alt="poke-img"/>) : (<img src={spinner} style={{width: '5em', height: '5em'}} className="card-img-top rounder mx-auto d-block mt-2" alt="loader"/>)}
               </div>
               <div className="col-md-9">
                 <h4 className="mx-auto">
