@@ -12,6 +12,7 @@ it('renders pokemonCard without crashing',  () => {
   ReactDOM.unmountComponentAtNode(div);
 })
 // crashes because I shouldn't use Link outside of Router
+// cannot use property split of undefined
 
 describe('rendering components', () => {
   it('renders PokemonCard correctly without crashing', () => {
