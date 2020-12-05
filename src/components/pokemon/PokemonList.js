@@ -56,13 +56,13 @@ export default class PokemonList extends Component {
         {this.state.pokemon ? (
         <div className="row">
           {this.state.pokemon.map(pokemon => (
-          <PokemonCard key={pokemon.name} name={pokemon.name} url={pokemon.url}/>
+          <PokemonCard data-testid="pokemoncard" key={pokemon.name} name={pokemon.name} url={pokemon.url}/>
           ))}
           </div>
         ) : (<h1>Loading pokemon</h1>
         )}
       </div>
-      <Button type="button" className="btn btn-info btn-block" onClick={this.handleClick}>Load More</Button>
+      <Button data-testid="button" type="button" className="btn btn-info btn-block" onClick={this.handleClick}>Load More</Button>
       </>
       );
   }

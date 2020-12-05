@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
 import logo from '../../unnamed.png';
 
 
-export default class NavBar extends Component {
-  render() {
+function NavBar() {
     return (
       <div>
         <div className="App">
@@ -24,5 +22,6 @@ export default class NavBar extends Component {
         </div>
       </div>
     )
-  }
 }
+
+export default NavBar;
