@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import PokemonCard from './PokemonCard';
 
-test('check if load button is visible', () => {
+test('check if name is visible', () => {
   render(<PokemonCard />);
   const linkElement = screen.getByText(/Load More/i);
   expect(linkElement).toBeInTheDocument();

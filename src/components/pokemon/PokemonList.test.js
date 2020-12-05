@@ -8,5 +8,6 @@ test('check if load button is visible', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-// Check if the API is loading pokemon information
+// Check if the API is loading 52 loadNumber
+// Does load button take you to pokemon id?
 // Rendering the component that loads the pokemons

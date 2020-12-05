@@ -1,3 +1,7 @@
+.App {
+  background-image: url('./components/layout/background.png');
+}
+
 .App-logo {
   height: 50px;
   pointer-events: none;
@@ -20,6 +24,7 @@
 
 .navbar {
   background-color: #ef5350 !important;
+  border-radius: 0px;
 }
 
 .progress-bar {

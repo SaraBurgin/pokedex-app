@@ -7,4 +7,5 @@ test('check if load button is visible', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
+// Is the pokemon name correct with its id?
 // Check if the picture, name, abilities, type, order number, stats, evolutions and moves are available

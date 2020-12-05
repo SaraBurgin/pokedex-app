@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,9 +8,7 @@ import NavBar from './components/layout/NavBar.js'
 import Dashboard from './components/layout/Dashboard'
 import Pokemon from './components/pokemon/Pokemon'
 
-class App extends Component {
-
-  render() {
+function App() {
       return (
         <Router>
           <div className="App">
@@ -24,7 +21,7 @@ class App extends Component {
               </div>
           </div>
         </ Router>
-      )}
+      )
 }
 
 export default App;
