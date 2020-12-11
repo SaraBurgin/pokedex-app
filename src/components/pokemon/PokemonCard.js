@@ -43,7 +43,7 @@ function PokemonCard(props) {
 
   useEffect(() => {
     setPokemonIndex(`${url ? url.split('/')[url.split('/').length - 2] : 0}`);
-    setImageUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`)
+    setImageUrl(`${imageUrl ? "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/" + pokemonIndex + ".png?raw=true" : null}`)
   }, [url, pokemonIndex, imageUrl]);
 
     return (
