@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Styled from 'styled-components';
@@ -32,46 +32,42 @@ const StyledLink = Styled(Link)`
   }
 `
 
-export default class PokemonCard extends Component {
-  state = {
-    name: '',
-    imageUrl: '',
-    pokemonIndex: '',
-    imageLoading: true,
-    tooManyRequests: false,
-  }
+function PokemonCard(props) {
+  const [ pokemonIndex, setPokemonIndex ] = useState('');
+  const [ imageUrl, setImageUrl ] = useState('');
 
-  componentDidMount() {
-    const { name, url } = this.props;
-    const pokemonIndex = url ? url.split('/')[url.split('/').length - 2] : 0;
-    const imageUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`;
+  const [imageLoading, setImageLoading ] = useState(true);
+  const [tooManyRequests, setTooManyRequests ] = useState(false);
 
-    this.setState({ name, imageUrl, pokemonIndex });
-  }
+  const { name, url } = props;
 
-  render() {
+  useEffect(() => {
+    setPokemonIndex(`${url ? url.split('/')[url.split('/').length - 2] : 0}`);
+    setImageUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`)
+  }, [url, pokemonIndex, imageUrl]);
+
     return (
       <div className="col-md-3 col-sm-6 mb-5">
-        <StyledLink to={`pokemon/${this.state.pokemonIndex}`}>
+        <StyledLink to={`pokemon/${pokemonIndex}`}>
         <Card className="card">
-          <h5 className="card-header">#{this.state.pokemonIndex}</h5>
-          {this.state.imageLoading ? (
+          <h5 className="card-header">#{pokemonIndex}</h5>
+          {imageLoading ? (
             <img src={spinner} style={{width: '5em', height: '5em'}} className="card-img-top rounder mx-auto d-block mt-2" alt="loader"/>
           ) : null}
           <Sprite
             className="card-img-top rounder mx-auto mt-2"
-            onLoad={() => this.setState({imageLoading: false})}
-            onError={() => this.setState({ tooManyRequests: true })}
-            src={this.state.imageUrl}
+            onLoad={() => setImageLoading(!imageLoading)}
+            onError={() => setTooManyRequests(true)}
+            src={imageUrl}
             style={
-              this.state.tooManyRequests ? {display: "none"} :
-              this.state.imageLoading ? null: {display: "block"}
+              tooManyRequests ? {display: "none"} :
+              imageLoading ? null: {display: "block"}
           }
           />
-          {this.state.tooManyRequests ? (<h6 className="mx-ato"><span className="badge badge-danger mt-2">Too Many Requests</span></h6>) : null}
+          {tooManyRequests ? (<h6 className="mx-ato"><span className="badge badge-danger mt-2">Too Many Requests</span></h6>) : null}
           <div className="card-body mx-auto">
             <h6 className="card-title ">
-            {this.state.name && this.state.name
+            {name && name
               .toLowerCase()
               .split(' ')
               .map(
@@ -84,5 +80,6 @@ export default class PokemonCard extends Component {
         </StyledLink>
         </div>
         )
-  }
 }
+
+export default PokemonCard;
