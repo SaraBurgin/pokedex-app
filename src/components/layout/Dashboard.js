@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PokemonList from '../pokemon/PokemonList'
 
-export default class Dashboard extends Component {
-  render() {
+
+function Dashboard() {
     return (
       <div className="row">
         <div className="col">
@@ -10,5 +10,6 @@ export default class Dashboard extends Component {
         </div>
       </div>
     )
-  }
 }
+
+export default Dashboard;

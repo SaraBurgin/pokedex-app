@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Styled from 'styled-components';
@@ -15,55 +15,49 @@ const Button = Styled.button`
   }
 `
 
-export default class PokemonList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      url: "https://pokeapi.co/api/v2/pokemon?offset=offset&limit=loadNumber",
-      pokemon: null,
-      offset: 0,
-      loadNumber: 52,
+const PokemonList= () => {
+  const [ url, setUrl ] = useState("https://pokeapi.co/api/v2/pokemon?offset=offset&limit=loadNumber");
+  const [pokemon, setPokemon] = useState(null);
+  const [offset, setOffset] = useState(0);
+  const loadNumber = 52;
+
+
+  function getNextOffset() {
+    return offset + loadNumber;
+  }
+
+  // setState is asynchronous so I will not see the change straight away in console.log. The useState Hook does not have a second callback argument like the old this.setState. Instead, we use the useEffect Hook.
+ function handleClick() {
+    const newOffset = getNextOffset();
+      setOffset(newOffset);
     }
-    this.handleClick = this.handleClick.bind(this);   
-  }
 
-  getNextOffset() {
-    return this.state.offset+this.state.loadNumber;
-  }
+    async function getMorePokemon() {
+      setUrl("https://pokeapi.co/api/v2/pokemon?offset=" + offset + "&limit=" + loadNumber);
+      const res = await axios.get(url);
+      return setPokemon(res.data['results']);
+    }
 
-  handleClick(){
-    const newOffset = this.getNextOffset();
-    this.setState({offset: newOffset}, () => {
-      console.log('Offset: ' + this.state.offset)
-      this.getMorePokemon();
-    })
-  }
+    useEffect(() => {
+      console.log('Offset: ' + offset)
+      getMorePokemon();
+    }, [offset])
 
-  componentDidMount() {
-    this.getMorePokemon();
-  }
-
-  async getMorePokemon() {
-    this.setState({url: "https://pokeapi.co/api/v2/pokemon?offset=" + this.state.offset + "&limit=" + this.state.loadNumber});
-    const res = await axios.get(this.state.url);
-    this.setState({pokemon: res.data['results'] });
-  }
-
-  render() {
-    return (
-      <>
+  return (
+    <>
       <div>
-        {this.state.pokemon ? (
+        {pokemon ? (
         <div className="row">
-          {this.state.pokemon.map(pokemon => (
+          {pokemon.map(pokemon => (
           <PokemonCard data-testid="pokemoncard" key={pokemon.name} name={pokemon.name} url={pokemon.url}/>
           ))}
           </div>
         ) : (<h1>Loading pokemon</h1>
         )}
       </div>
-      <Button data-testid="button" type="button" className="btn btn-info btn-block" onClick={this.handleClick}>Load More</Button>
+      <Button data-testid="button" type="button" className="btn btn-info btn-block" onClick={handleClick}>Load More</Button>
       </>
-      );
-  }
-}
+  )
+} 
+
+export default PokemonList;
