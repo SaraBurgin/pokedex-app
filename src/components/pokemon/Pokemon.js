@@ -59,7 +59,7 @@ export default class Pokemon extends Component {
     const pokemonRes = await axios.get(pokemonUrl);
 
     const name = pokemonRes.data.name;
-    const imageUrl = `https://img.pokemondb.net/sprites/home/normal/${name}.png`
+    const imageUrl = `${name ? "https://img.pokemondb.net/sprites/home/normal/" + name + ".png" : null}`
 
     const moves = pokemonRes.data.moves.map(move => 
       move.move.name
@@ -350,7 +350,7 @@ if(evol2 === undefined) {
             <div className="card-body">
               <div className="row align-items-center">
                 <div className="col-sm text-center">
-                  <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol1}.png`} alt=""/>
+                <img src={`${this.state.evol1 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol1 + ".png": null}`} alt=""/>
                   <h5>{this.state.evol1
                   .toLowerCase()
                   .split('-')
@@ -359,7 +359,7 @@ if(evol2 === undefined) {
                     }</h5>
                 </div>
                 <div className="col-sm text-center">
-                  <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol2}.png`} alt=""/>
+                  <img src={`${this.state.evol2 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol2 + ".png": null}`} alt=""/>
                   <h5>{this.state.evol2
                   .toLowerCase()
                   .split(' ')
@@ -368,7 +368,7 @@ if(evol2 === undefined) {
                     }</h5>
                 </div>
                 <div className="col-sm text-center">
-                <img src={`https://img.pokemondb.net/sprites/home/normal/${this.state.evol3}.png`} alt=""/>
+                <img src={`${this.state.evol3 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol3 + ".png" : null}`} alt=""/>
                   <h5>{this.state.evol3
                                     .toLowerCase()
                                     .split(' ')
