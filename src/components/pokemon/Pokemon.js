@@ -59,6 +59,7 @@ export default class Pokemon extends Component {
     const pokemonRes = await axios.get(pokemonUrl);
 
     const name = pokemonRes.data.name;
+    console.log(name);
     const imageUrl = `${name ? "https://img.pokemondb.net/sprites/home/normal/" + name + ".png" : null}`
 
     const moves = pokemonRes.data.moves.map(move => 
@@ -126,12 +127,12 @@ let evol2 = pokemonResEvolution.data.chain['evolves_to'][0];
 let evol3 = pokemonResEvolution.data.chain['evolves_to'][0];
 
 if(evol2 === undefined) {
-  evol2 = ' ';
-  evol3 = ' ';
+  evol2 = '';
+  evol3 = '';
   console.log("No further evolutions");
 } else if (evol3['evolves_to'][0] === undefined){
     evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name;
-    evol3 = ' ';
+    evol3 = '';
     console.log(`Just 1 available evolution ${evol2}`);
 } else {
     evol2 = pokemonResEvolution.data.chain['evolves_to'][0].species.name
@@ -350,7 +351,7 @@ if(evol2 === undefined) {
             <div className="card-body">
               <div className="row align-items-center">
                 <div className="col-sm text-center">
-                <img src={`${this.state.evol1 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol1 + ".png": null}`} alt=""/>
+                <img src={`${this.state.evol1 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol1 + ".png": ' '}`} alt=""/>
                   <h5>{this.state.evol1
                   .toLowerCase()
                   .split('-')
@@ -359,7 +360,7 @@ if(evol2 === undefined) {
                     }</h5>
                 </div>
                 <div className="col-sm text-center">
-                  <img src={`${this.state.evol2 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol2 + ".png": null}`} alt=""/>
+                  <img src={`${this.state.evol2 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol2 + ".png": ' '}`} alt=""/>
                   <h5>{this.state.evol2
                   .toLowerCase()
                   .split(' ')
@@ -368,7 +369,7 @@ if(evol2 === undefined) {
                     }</h5>
                 </div>
                 <div className="col-sm text-center">
-                <img src={`${this.state.evol3 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol3 + ".png" : null}`} alt=""/>
+                <img src={`${this.state.evol3 ? "https://img.pokemondb.net/sprites/home/normal/" + this.state.evol3 + ".png" : ' '}`} alt=""/>
                   <h5>{this.state.evol3
                                     .toLowerCase()
                                     .split(' ')
