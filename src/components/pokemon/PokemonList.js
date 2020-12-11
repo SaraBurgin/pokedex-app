@@ -38,9 +38,11 @@ const PokemonList= () => {
       return setPokemon(res.data['results']);
     }
 
+    // Desabling lint is just temporary solution. Keep searching for further documentation on this error. 
     useEffect(() => {
       console.log('Offset: ' + offset)
       getMorePokemon();
+      //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [offset])
 
   return (
