@@ -38,7 +38,7 @@ const PokemonList= () => {
       return setPokemon(res.data['results']);
     }
 
-    // Desabling lint is just temporary solution. Keep searching for further documentation on this error. 
+    // Desabling eslint is just temporary solution. Keep searching for further documentation on this console error. 
     useEffect(() => {
       console.log('Offset: ' + offset)
       getMorePokemon();

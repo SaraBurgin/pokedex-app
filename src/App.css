@@ -1,5 +1,6 @@
 .App {
   background-image: url('./components/layout/background.png');
+  background-size: 100vh;
 }
 
 .App-logo {
