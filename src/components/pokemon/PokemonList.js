@@ -21,12 +21,12 @@ const PokemonList= () => {
   const [offset, setOffset] = useState(0);
   const loadNumber = 52;
 
-
   function getNextOffset() {
     return offset + loadNumber;
   }
 
   // setState is asynchronous so I will not see the change straight away in console.log. The useState Hook does not have a second callback argument like the old this.setState. Instead, we use the useEffect Hook.
+
  function handleClick() {
     const newOffset = getNextOffset();
       setOffset(newOffset);
@@ -35,12 +35,12 @@ const PokemonList= () => {
     async function getMorePokemon() {
       setUrl("https://pokeapi.co/api/v2/pokemon?offset=" + offset + "&limit=" + loadNumber);
       const res = await axios.get(url);
-      return setPokemon(res.data['results']);
+      return setPokemon(res.data['results'])
     }
 
     // Desabling eslint is just temporary solution. Keep searching for further documentation on this console error. 
     useEffect(() => {
-      console.log('Offset: ' + offset)
+      console.log('offset: ' + offset)
       getMorePokemon();
       //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [offset])

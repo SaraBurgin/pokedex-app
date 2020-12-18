@@ -9,6 +9,7 @@ import Dashboard from './components/layout/Dashboard'
 import Pokemon from './components/pokemon/Pokemon'
 
 function App() {
+  
       return (
         <Router>
           <div className="App">
